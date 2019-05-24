@@ -1,4 +1,5 @@
 #include <QTRSensors.h>
+#include <Servo.h>
 //penser à installer la library qtr
 // create an object for your type of sensor (RC or Analog)
 // in this example we have two sensors on analog inputs 0 - 1, a.k.a. digital pins 8 - 9
@@ -25,15 +26,18 @@ void stop() {
   digitalWrite(11, HIGH);
 }
 
+Servo servoG; // creation servo gauche
+const int pin_servoG = 3; // pin servo gauche
+
 void setup()
 {
   // optional: wait for some input from the user, such as  a button press
-  servo1.attach(pin_servoG);
-  pinMode(5, OUTPUT);
-  pinMode(6, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
-  pinMode(13, OUTPUT);
+  servo1.attach(pin_servoG); //déclaration du servo gauche
+  pinMode(5, OUTPUT); // broche moteur
+  pinMode(6, OUTPUT); //broche moteur
+  pinMode(10, OUTPUT); //broche moteur
+  pinMode(11, OUTPUT); //broche moteur
+  pinMode(13, OUTPUT);  // LED carte
   digitalWrite(13, HIGH);    // turn on Arduino's LED to indicate we are in calibration mode
   // then start calibration phase and move the sensors over both
   // reflectance extremes they will encounter in your application:
