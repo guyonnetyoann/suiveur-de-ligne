@@ -5,39 +5,21 @@
 // in this example we have two sensors on analog inputs 0 - 1, a.k.a. digital pins 8 - 9
 QTRSensorsRC qtr((char[]) {8, 9}, 2);
 // QTRSensorsA qtr((char[]) {0, 1}, 2); //capteur analogique
-void Tourner_D() {
-  analogWrite(5, 59);
-  analogWrite(6, 60);
-  digitalWrite(10, LOW);
-  digitalWrite(11, HIGH);
-}
-void Tourner_G() {
-  analogWrite(5, 59);
-  analogWrite(6, 60);
-  digitalWrite(10, HIGH);
-  digitalWrite(11, LOW);
-}
 
-// Décrire cette fonction
-void stop() {
-  analogWrite(5, 0);
-  analogWrite(6, 0);
-  digitalWrite(10, HIGH);
-  digitalWrite(11, HIGH);
-}
 
 Servo servoG; // creation servo gauche
+Servo servoD; // creation servo droit
 const int pin_servoG = 3; // pin servo gauche
+const int pin_servoG = 4; // pin servo droit
 
 void setup()
 {
   // optional: wait for some input from the user, such as  a button press
   servo1.attach(pin_servoG); //déclaration du servo gauche
-  pinMode(5, OUTPUT); // broche moteur
-  pinMode(6, OUTPUT); //broche moteur
-  pinMode(10, OUTPUT); //broche moteur
-  pinMode(11, OUTPUT); //broche moteur
+  pinMode(pin_servoG, INPUT); // broche servoG
+  pinMode(pin_servoD, INPUT); // broche servoD
   pinMode(13, OUTPUT);  // LED carte
+	
   digitalWrite(13, HIGH);    // turn on Arduino's LED to indicate we are in calibration mode
   // then start calibration phase and move the sensors over both
   // reflectance extremes they will encounter in your application:
@@ -72,4 +54,18 @@ void loop()
     stop();
   }
  
+}
+
+// Fonction déplacement robot
+void Tourner_D() {
+   servo1.write(0);
+	 servo1.write(0);
+}
+void Tourner_G() {
+  servo1.write(0);
+	servo1.write(0);
+}
+void stop() {
+   servo1.write(0);
+	 servo1.write(0);
 }
