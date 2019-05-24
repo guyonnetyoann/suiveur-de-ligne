@@ -28,7 +28,8 @@ void stop() {
 void setup()
 {
   // optional: wait for some input from the user, such as  a button press
-   pinMode(5, OUTPUT);
+  servo1.attach(pin_servoG);
+  pinMode(5, OUTPUT);
   pinMode(6, OUTPUT);
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
