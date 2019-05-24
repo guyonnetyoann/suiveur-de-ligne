@@ -1,0 +1,65 @@
+#include <QTRSensors.h>
+// créer un objet pour votre type de senseur (RC ou Analogique)
+// Dans cet exemple, il s'agit de trois senseur sur les
+// entrées analogiques 0 à 2 (donc les broches digitales de
+// 14 à 16)
+QTRSensorsRC qtr((char[]) {14, 15, 16}, 3);
+// QTRSensorsA qtr((char[]) {0, 1, 2}, 3);
+void setup()
+{
+// optionnel: attendre une action de l'utilisateur comme
+// la pression d'un bouton.
+// Puis démarrer la phase de calibration et déplacez le
+// senseurs au dessus des deux surfaces avec les reflectances
+// opposées (extrêmes) que votre application rencontrera:
+int i;
+for (i = 0; i < 250; i++) // Réaliser une pendant ~5 secondes
+{
+qtr.calibrate();
+delay(20);
+}
+// optionnel: signaler que la phase de calibration est
+// achevée et attendre une action de l'utilisateur
+// (comme par exemple, la pression d'un bouton)
+}
+void loop()
+{
+unsigned int sensors[3];
+// obtenir les valeurs calibrées du senseur (dans un tableau de senseur)
+// ainsi que la position de la ligne dans une gamme de valeur de
+// 0 à 2000, avec 1000 retournée pour la ligne au milieu du senseur.
+int position = qtr.readLine(sensors);
+// Si tous les senseurs ont une très faible réflectance, alors prendre
+// un action appropriée pour cette situation.
+if (sensors[0] > 750 && sensors[1] > 750 && sensors[2] > 750)
+{
+// Faire une action. Cela peu signifier que l'on est à la fin
+// de la course ou peut être tombé de la table, auquel cas, nous
+// nous devrions arrêter de bouger, se retourner, aller à la
+// recherche de la ligne.
+return;
+}
+// Calculer l' "erreur" par rapport à la position de la ligne.
+// Nous allons faire en sorte que l'erreur = 0 lorsque la ligne est
+// placée sous le milieu du senseur (parce que c'est notre but).
+// L'erreur aura une valeur entre -1000 et +1000.
+// Si nous avons le senseur 0 à gauche et le senseur 2 à droite alors
+// une lecture d'erreur de -1000 signifie que nous voyons la ligne
+// sur la gauche par rapport au centre du senseur alors qu'une
+// lecture de +1000 signifie que la ligne est sur la droite
+// par rapport au centre.
+int error = position - 1000;
+// Vitesse des moteurs
+int leftMotorSpeed = 100; // gauche
+int rightMotorSpeed = 100;// droite
+if (error < -500) // ligne sur la gauche
+// tourner à droite
+// -> arrêter moteur gauche
+leftMotorSpeed = 0;
+if (error > 500) // ligne sur la droite
+// tourner à gauche
+// -> arrêter le moteur droit
+rightMotorSpeed = 0;
+// Fixer la vitesse des moteurs en utilisant
+// les valeurs de leftMotorSpeed et rightMotorSpeed
+}
