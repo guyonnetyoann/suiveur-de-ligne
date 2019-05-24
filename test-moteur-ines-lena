@@ -3,7 +3,7 @@
 // create an object for your type of sensor (RC or Analog)
 // in this example we have two sensors on analog inputs 0 - 1, a.k.a. digital pins 8 - 9
 QTRSensorsRC qtr((char[]) {8, 9}, 2);
-// QTRSensorsA qtr((char[]) {0, 1}, 2); //capteur anaologique
+// QTRSensorsA qtr((char[]) {0, 1}, 2); //capteur analogique
 void Tourner_D() {
   analogWrite(5, 59);
   analogWrite(6, 60);
