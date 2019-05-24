@@ -1,11 +1,11 @@
 #include <QTRSensors.h>
 #include <Servo.h>
-//penser à installer la library qtr
-// create an object for your type of sensor (RC or Analog)
-// in this example we have two sensors on analog inputs 0 - 1, a.k.a. digital pins 8 - 9
+//NB : penser à installer la library qtr
+// Créé un objet pour votre type de capteur (RC or Analog)
+// dans cet exemple nous avons deux capteur sur les entrées analogiques 0 - 1, a.k.a. digital pins 8 - 9
 QTRSensorsRC qtr((char[]) {8, 9}, 2);
-// QTRSensorsA qtr((char[]) {0, 1}, 2); //capteur analogique
-
+// QTRSensorsA qtr((char[]) {0, 1}, 2); //dans le cas de capteurs analogiques
+//Je pprésume que la library qtr créé les 
 
 Servo servoG; // creation servo gauche
 Servo servoD; // creation servo droit
@@ -14,24 +14,22 @@ const int pin_servoG = 4; // pin servo droit
 
 void setup()
 {
-  // optional: wait for some input from the user, such as  a button press
+  // optionel: attendre un ordre de l'utilisateur comme l'appuis sur un bouton
   servo1.attach(pin_servoG); //déclaration du servo gauche
-  pinMode(pin_servoG, INPUT); // broche servoG
-  pinMode(pin_servoD, INPUT); // broche servoD
+  pinMode(pin_servoG, OUTPUT); // broche servoG
+  pinMode(pin_servoD, OUTPUT); // broche servoD
   pinMode(13, OUTPUT);  // LED carte
 	
-  digitalWrite(13, HIGH);    // turn on Arduino's LED to indicate we are in calibration mode
-  // then start calibration phase and move the sensors over both
-  // reflectance extremes they will encounter in your application:
+  digitalWrite(13, HIGH);    // allume la LED de la carte pour indiquer que nous sommes en mode calibration
+  // commencer la calibration en déplaçant la ligne 
+  // avec les deux valeurs extrèmes de blanc et de noir
   int i;
   for (i = 0; i < 250; i++)  // make the calibration take about 5 seconds
   {
     qtr.calibrate();
     delay(20);
   }
-  digitalWrite(13, LOW);    // turn on Arduino's LED to indicate we are in calibration mode
-   // optional: signal that the calibration phase is now over and wait for further
-  // input from the user, such as a button press
+  digitalWrite(13, LOW);    // Eteindre  la LED pour indiquer la fin de la qualibration
 }
 void loop()
 {
@@ -40,7 +38,7 @@ void loop()
   // position will range from 0 to 2000, with 1000 corresponding to the line over the middle
   // sensor.
   int position = qtr.readLine(sensors);
-  // if all three sensors see very low reflectance, take some appropriate action for this
+  // if all the sensors see very low reflectance, take some appropriate action for this
   // situation.void setup() {
 
   if (sensors[0] > 750) {
@@ -58,14 +56,14 @@ void loop()
 
 // Fonction déplacement robot
 void Tourner_D() {
-   servo1.write(0);
-	 servo1.write(0);
+ 	servo1.write(0);
+	servo1.write(0);
 }
 void Tourner_G() {
-  servo1.write(0);
+  	servo1.write(0);
 	servo1.write(0);
 }
 void stop() {
-   servo1.write(0);
+  	 servo1.write(0);
 	 servo1.write(0);
 }
