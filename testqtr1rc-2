@@ -4,20 +4,11 @@
 // Créé un objet pour votre type de capteur (RC or Analog)
 // dans cet exemple nous avons deux capteur sur les entrées analogiques 0 - 1, a.k.a. digital pins 8 - 9
 QTRSensorsRC qtr((char[]) {8, 9}, 2);
-// QTRSensorsA qtr((char[]) {0, 1}, 2); //dans le cas de capteurs analogiques
-//Je pprésume que la library qtr créé les 
 
-Servo servoG; // creation servo gauche
-Servo servoD; // creation servo droit
-const int pin_servoG = 3; // pin servo gauche
-const int pin_servoG = 4; // pin servo droit
 
 void setup()
 {
   // optionel: attendre un ordre de l'utilisateur comme l'appuis sur un bouton
-  servo1.attach(pin_servoG); //déclaration du servo gauche
-  pinMode(pin_servoG, OUTPUT); // broche servoG
-  pinMode(pin_servoD, OUTPUT); // broche servoD
   pinMode(13, OUTPUT);  // LED carte
 	
   digitalWrite(13, HIGH);    // allume la LED de la carte pour indiquer que nous sommes en mode calibration
@@ -42,28 +33,15 @@ void loop()
   // situation.void setup() {
 
   if (sensors[0] > 750) {
-    Tourner_D();
-    delay(100);
-    stop();
+   digitalWrite(13, HIGH);
+   delay(100);
+   digitalWrite(13, LOW);
   }
    if (sensors[1] > 750) {
-    Tourner_G();
+    digitalWrite(13, HIGH);
     delay(100);
-    stop();
+    digitalWrite(13, LOW);
   }
  
 }
 
-// Fonction déplacement robot
-void Tourner_D() {
- 	servo1.write(0);
-	servo1.write(0);
-}
-void Tourner_G() {
-  	servo1.write(0);
-	servo1.write(0);
-}
-void stop() {
-  	 servo1.write(0);
-	 servo1.write(0);
-}
