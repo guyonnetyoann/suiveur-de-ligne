@@ -31,7 +31,7 @@ void setup()
     qtr.calibrate();
     delay(20);
   }
-  digitalWrite(13, LOW);    // Eteindre  la LED pour indiquer la fin de la qualibration
+  digitalWrite(13, LOW);    // Eteindre  la LED pour indiquer la fin de la calibration
 }
 void loop()
 {
