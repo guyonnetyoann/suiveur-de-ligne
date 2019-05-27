@@ -10,7 +10,8 @@ void setup()
 {
   // optionel: attendre un ordre de l'utilisateur comme l'appuis sur un bouton
   pinMode(13, OUTPUT);  // LED carte
-	
+Serial.begin(9600);
+  
   digitalWrite(13, HIGH);    // allume la LED de la carte pour indiquer que nous sommes en mode calibration
   // commencer la calibration en déplaçant la ligne 
   // avec les deux valeurs extrèmes de blanc et de noir
@@ -31,17 +32,20 @@ void loop()
   int position = qtr.readLine(sensors);
   // if all the sensors see very low reflectance, take some appropriate action for this
   // situation.void setup() {
-
+  Serial.println(position);
   if (sensors[0] > 750) {
-   digitalWrite(13, HIGH);
-   delay(100);
-   digitalWrite(13, LOW);
-  }
-   if (sensors[1] > 750) {
     digitalWrite(13, HIGH);
     delay(100);
     digitalWrite(13, LOW);
+   Serial.println("moteur droit en avant");
   }
- 
+   else if (sensors[1] > 750) {
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    Serial.println("moteur gauche en avant");
+  }
+  else {
+  Serial.print("moteur gauche et droit en avant");
+  }
 }
-
